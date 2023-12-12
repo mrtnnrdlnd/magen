@@ -1,0 +1,52 @@
+@media print {
+    body *:not(.printable, .printable *) {
+      display: none;
+    }
+}
+
+.matrix-table {
+    border: 1px solid black;
+    width:0px;
+    table-layout:fixed;
+    border-spacing: 0px;
+}
+.matrix-table > tr > td {
+    text-align: center;
+    line-height: 70px;
+    width: 70px;
+    height: 70px;
+    font-size: 30px;
+    font-family:'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border: 1px solid black;
+    overflow: hidden;
+}
+/* .matrix-table > tr > td:hover {
+    font-size: 35px;
+    background-color:white;
+} */
+.matrix-multiplication {
+    width: 0;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.A {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+/* .A:hover {
+    background-color:aliceblue;
+} */
+.B {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+/* .B:hover {
+    background-color:aliceblue;
+} */
+.C {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+/* .C:hover {
+    background-color:aliceblue;
+} */
