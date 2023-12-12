@@ -2,22 +2,7 @@
 // Init
 (function() {
     document.body.onload = generateGrid;
-    // document.getElementById("printMatrix").onclick = printMatrix;
-    // document.getElementById("toggleResult").onclick = () => Table.toggleContent(document.getElementsByClassName("C")[0]);
 })();
-
-function printElement(e) {
-    let cloned = e.cloneNode(true);
-    document.body.appendChild(cloned);
-    cloned.classList.add("printable");
-    window.print();
-    document.body.removeChild(cloned);
-}
-
-function printMatrix() {
-    const matrix = document.getElementsByClassName("matrix-multiplication")[0];
-    printElement(matrix);
-}
 
 function generateGrid() {
     const queryString = window.location.search;
