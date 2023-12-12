@@ -13,6 +13,10 @@ function generateGrid() {
     let hide = urlParams.get('hide');
     let fill = urlParams.get('fill');
     let seed = urlParams.get('seed')
+    
+    if (seed == "date") {
+        seed = new Date().toISOString().slice(0, 10)
+    }
 
     let fillFunction = fillFunctions[fill](seed);
     let matrices = {
