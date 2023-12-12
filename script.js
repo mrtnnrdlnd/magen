@@ -2,8 +2,8 @@
 // Init
 (function() {
     document.body.onload = generateGrid;
-    document.getElementById("printMatrix").onclick = printMatrix;
-    document.getElementById("toggleResult").onclick = () => Table.toggleContent(document.getElementsByClassName("C")[0]);
+    // document.getElementById("printMatrix").onclick = printMatrix;
+    // document.getElementById("toggleResult").onclick = () => Table.toggleContent(document.getElementsByClassName("C")[0]);
 })();
 
 function printElement(e) {
