@@ -35,8 +35,9 @@ function generateGrid() {
     }
 
     displayDiv.appendChild(wrapper)
-
-    hide.split('').filter(param => "ABC".includes(param)).forEach(toHide => Table.toggleContent(document.getElementsByClassName(toHide)[0]))
+    
+    hide.toUpperCase().split('').filter(param => "ABC".includes(param))
+        .forEach(toHide => Table.toggleContent(document.getElementsByClassName(toHide)[0]))
 }
 
 function seededRandom(seed) {
