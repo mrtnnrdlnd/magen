@@ -9,6 +9,15 @@ Använd genom att modifiera url parametrarna A, B, fill, hide och seed
   hide=göm siffror i matris A,B eller C (resultat matrisen)&  
   seed=seed till random fill, om man sätter "date" kommer den sätta dagens datum som seed, formaterat ÅÅÅÅ-MM-DD
 
+<form action="https://mrtnnrdlnd.github.io/magen/">
+  <label for="A">A:</label><br>
+  <input type="text" id="A" value="4,4"><br><br>
+  <label for="B">B:</label><br>
+  <input type="text" id="B" value="4,4"><br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
 ## Exempel
 
 Matrismultiplikation 4x4 matriser slumpade tal 0-9  
