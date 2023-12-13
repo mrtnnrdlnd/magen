@@ -1,12 +1,12 @@
 # MaGen
 Ett litet javascript projekt för att generera matris-multiplikations-läxa.
 
-Använd genom att modifiera url parametrarna A, B, fill, hide och seed
-?
-  A=<dimensioner första matris>&
-  B=<dimensioner andra matris>&
-  fill=<index / random fyllnad av matris>&
-  hide=<göm siffror i matris A,B eller C (resultat matrisen)&
+Använd genom att modifiera url parametrarna A, B, fill, hide och seed  
+?  
+  A=<dimensioner första matris>&  
+  B=<dimensioner andra matris>&  
+  fill=<index / random fyllnad av matris>&  
+  hide=<göm siffror i matris A,B eller C (resultat matrisen)&  
   seed=<seed till random fill, om man sätter "date" kommer den sätta dagens datum som seed, formaterat ÅÅÅÅ-MM-DD
 
 ## Exempel
