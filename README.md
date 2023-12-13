@@ -1,6 +1,17 @@
 # MaGen
 Ett litet javascript projekt för att generera matris-multiplikations-läxa.
 
+Använd genom att modifiera url parametrarna A, B, fill, hide och seed  
+?  
+  A=dimensioner matris A &  
+  B=dimensioner matris B &  
+  fill=index / random fyllnad av matris &  
+  hide=göm siffror i matris A,B eller C (resultat matrisen)&  
+  seed=seed till random fill, om man sätter "date" kommer den sätta dagens datum som seed, formaterat ÅÅÅÅ-MM-DD
+
+
+## Exempel
+
 Matrismultiplikation 4x4 matriser slumpade tal 0-9  
 https://mrtnnrdlnd.github.io/magen/?A=4,4&B=4,4&fill=random&hide=C
 
