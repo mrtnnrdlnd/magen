@@ -17,6 +17,9 @@ function generateGrid() {
     if (seed == "date") {
         seed = new Date().toISOString().slice(0, 10)
     }
+    if (!fill) {
+        fill = "index"
+    }
 
     let fillFunction = fillFunctions[fill](seed);
     let matrices = {
@@ -40,8 +43,11 @@ function generateGrid() {
 
     displayDiv.appendChild(wrapper)
     
-    hide.toUpperCase().split('').filter(param => "ABC".includes(param))
-        .forEach(toHide => Table.toggleContent(document.getElementsByClassName(toHide)[0]))
+    if (hide) {
+        hide.toUpperCase().split('').filter(param => "ABC".includes(param))
+            .forEach(toHide => Table.toggleContent(document.getElementsByClassName(toHide)[0]))
+    }
+    
 }
 
 function seededRandom(seed) {
