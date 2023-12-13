@@ -1,9 +1,3 @@
-@media print {
-    body *:not(.printable, .printable *) {
-      display: none;
-    }
-}
-
 .matrix-table {
     border: 1px solid black;
     width:0px;
