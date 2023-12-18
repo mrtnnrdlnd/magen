@@ -12,11 +12,14 @@ Använd genom att modifiera url parametrarna A, B, fill, hide och seed
 
 ## Exempel
 
+Ekvationslösning
+https://mrtnnrdlnd.github.io/magen/?A=2,1&B=2,2&fill=random&hide=A
+
 Matrismultiplikation 4x4 matriser slumpade tal 0-9  
 https://mrtnnrdlnd.github.io/magen/?A=4,4&B=4,4&fill=random&hide=C
 
-Matrismultiplikation 1x8 * 8x1 matriser med index-fyllnad. Multiplikationstabell.  
-https://mrtnnrdlnd.github.io/magen/?A=1,8&B=8,1&fill=index&hide=C
+Matrismultiplikation 1x9 * 9x1 matriser med index-fyllnad. Multiplikationstabell.  
+https://mrtnnrdlnd.github.io/magen/?A=1,9&B=9,1&fill=index&hide=C
 
 Matrismultiplikation 1x1 * 9x1 matriser med index-fyllnad. Lära skriva siffror.  
 https://mrtnnrdlnd.github.io/magen/?A=1,1&B=9,1&fill=index&hide=C
