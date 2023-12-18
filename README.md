@@ -12,7 +12,7 @@ Använd genom att modifiera url parametrarna A, B, fill, hide och seed
 
 ## Exempel
 
-Ekvationslösning
+Ekvationslösning  
 https://mrtnnrdlnd.github.io/magen/?A=2,1&B=2,2&fill=random&hide=A
 
 Matrismultiplikation 4x4 matriser slumpade tal 0-9  
