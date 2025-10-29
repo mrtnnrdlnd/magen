@@ -128,10 +128,38 @@ function generateGrid() {
 
   const p = getMatrixParameters();
   const seedBase = p.seed === 'date' ? new Date().toISOString().slice(0, 10) : p.seed;
-  const [Ar, Ac] = p.dimensions.A;
-  const [Br, Bc] = p.dimensions.B;
+
+  // prioritera URL-params, fallback till inputs om tomt
+  let [Ar, Ac] = p.dimensions.A;
+  let [Br, Bc] = p.dimensions.B;
+  if (!Ar && !Ac) { Ar = Number(document.getElementById('A-rows')?.value) || 0; Ac = Number(document.getElementById('A-cols')?.value) || 0; }
+  if (!Br && !Bc) { Br = Number(document.getElementById('B-rows')?.value) || 0; Bc = Number(document.getElementById('B-cols')?.value) || 0; }
+
+  console.debug('generateGrid input dims', { A: [Ar, Ac], B: [Br, Bc], url: location.href });
+
+  // Om A.cols != B.rows, försök gälla en enkel auto-korrigering (swap/transponera) om det gör multiplikationen möjlig
+  if (Ac !== Br) {
+    // om en transponering av båda skulle lösa det (Ar==Bc) — byt rakt av
+    if (Ar === Bc && Ac === Br === false) {
+      console.warn('Auto-fixer: byter rader<->kolumner (troligen transponerade inputs).');
+      [Ar, Ac] = [Ac, Ar];
+      [Br, Bc] = [Bc, Br];
+    } else if (Ar === Bc) {
+      // mer konservativ: byt A dims om det gör rader/kolumner kompatibla
+      console.warn('Auto-fixer: byter A dims.');
+      [Ar, Ac] = [Ac, Ar];
+    } else {
+      // visa tydlig varning i UI men fortsätt (multiplikationen kan ge "undefined" celler)
+      const note = document.createElement('div');
+      note.style.cssText = 'color:#b45309;background:#fff7ed;padding:8px;border-radius:6px;margin-bottom:8px;border:1px solid #fcd34d';
+      note.textContent = `Dimension mismatch: A kolumner (${Ac}) ≠ B rader (${Br}). Kontrollera URL eller formulär.`;
+      wrapper.appendChild(note);
+      console.warn('Dimension mismatch, proceeding anyway', { Ar, Ac, Br, Bc });
+    }
+  }
 
   const instances = makeMatrices(Ar, Ac, Br, Bc, p.fill, seedBase, p.copies);
+
   instances.forEach((inst, idx) => {
     const block = document.createElement('div');
     block.className = 'matrix-multiplication';
