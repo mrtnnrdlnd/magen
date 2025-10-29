@@ -1,10 +1,10 @@
 .matrix-table {
     border: 1px solid black;
-    width:0px;
-    table-layout:fixed;
+    width: auto;               /* tidigare 0px — låt tabellen bestämma sin bredd */
+    table-layout: fixed;
     border-spacing: 0px;
 }
-.matrix-table > tr > td {
+.matrix-table td {
     text-align: center;
     line-height: 70px;
     width: 70px;
@@ -14,14 +14,21 @@
     border: 1px solid black;
     overflow: hidden;
 }
+.crossed-out {
+    background-color:gray;
+}
 /* .matrix-table > tr > td:hover {
     font-size: 35px;
     background-color:white;
 } */
 .matrix-multiplication {
-    width: 0;
     display: grid;
     grid-template-columns: auto auto;
+    gap: 12px;
+    justify-content: center;   /* centrera horisontellt */
+    align-items: center;       /* centrera vertikalt inom gridet */
+    margin: 5em auto;         /* centrerar blocket och ger mellanrum */
+    width: auto;               /* ta bort tidigare width:0 */
 }
 .A {
     grid-column: 1 / 2;
@@ -44,3 +51,21 @@
 /* .C:hover {
     background-color:aliceblue;
 } */
+
+/* Print / page-break rules */
+@page {
+  size: A4;
+  margin: 20mm;
+}
+
+@media print {
+  /* Varje block blir en egen sidan */
+  .matrix-multiplication {
+    /* page-break-after: always; */
+    /* break-after: page; */
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-sizing: border-box;
+  }
+
+}

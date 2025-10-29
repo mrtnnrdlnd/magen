@@ -4,8 +4,501 @@
     <title>MaGen</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js" defer></script>
+
+    <style>
+      :root{
+        --bg: #ffffff;
+        --card: #ffffff;
+        --muted: #6b7280;
+        --text: #0f1724;
+        --accent: #2563eb;
+        --accent-2: #0ea5a4;
+        --border: #e6e9ef;
+        --radius:8px;
+        --gap:12px;
+        --input-height:40px;
+      }
+
+      html,body{height:100%;}
+      body{
+        margin:0;
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        background: var(--bg);
+        color:var(--text);
+        padding:24px;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+      }
+
+      /* layout: kontroll ovanför, preview under; lika breda */
+      .container{
+        max-width:1100px;
+        margin:0 auto;
+        display:flex;
+        flex-direction:column;
+        gap:var(--gap);
+        align-items:stretch;
+      }
+
+      /* platt kort */
+      .controls-card,
+      .preview{
+        background: var(--card);
+        border-radius:var(--radius);
+        padding:16px;
+        border:1px solid var(--border);
+        width:100%;
+        box-sizing:border-box;
+      }
+
+      .controls-card h3{
+        margin:0 0 12px 0;
+        font-size:15px;
+        color:var(--text);
+        font-weight:600;
+      }
+
+      .form-grid{
+        display:grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap:10px;
+        align-items:center;
+      }
+
+      .matrix-block{
+        grid-column: span 2;
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+      }
+
+      .matrix-row{
+        display:flex;
+        gap:8px;
+        align-items:center;
+      }
+
+      label.small{ font-size:12px; color:var(--muted); }
+
+      input[type="number"],
+      input[type="text"],
+      select{
+        height:var(--input-height);
+        background:transparent;
+        border:1px solid var(--border);
+        color:var(--text);
+        padding:8px 10px;
+        border-radius:8px;
+        outline:none;
+        width:100%;
+        box-sizing:border-box;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button { opacity:0.6; }
+
+      input[type="number"]:focus,
+      input[type="text"]:focus,
+      select:focus{
+        border-color:var(--accent);
+        box-shadow: 0 6px 18px rgba(37,99,235,0.06);
+      }
+
+      .lock-row{
+        grid-column: span 2;
+        display:flex;
+        gap:8px;
+        align-items:center;
+      }
+
+      /* platt toggle */
+      .toggle{
+        appearance:none;
+        width:40px;
+        height:22px;
+        background:#f3f4f6;
+        border-radius:999px;
+        position:relative;
+        outline:none;
+        border:1px solid var(--border);
+        cursor:pointer;
+      }
+      .toggle::after{
+        content:'';
+        position:absolute;
+        top:3px;
+        left:3px;
+        width:16px;
+        height:16px;
+        border-radius:50%;
+        background:#ffffff;
+        transition:transform .12s linear;
+      }
+      .toggle:checked{
+        background:var(--accent);
+        border-color:var(--accent);
+      }
+      .toggle:checked::after{
+        transform:translateX(18px);
+      }
+
+      .actions{
+        display:flex;
+        gap:8px;
+        margin-top:12px;
+        grid-column: span 2;
+      }
+      .btn{
+        height:44px;
+        border-radius:8px;
+        padding:0 14px;
+        border:1px solid var(--border);
+        cursor:pointer;
+        font-weight:600;
+        background:transparent;
+        color:var(--text);
+      }
+      .btn.primary{
+        background:var(--accent);
+        color:white;
+        border-color:transparent;
+      }
+      .btn.ghost{
+        background:transparent;
+        color:var(--muted);
+      }
+
+      .preview{
+        min-height:260px;
+      }
+
+      .top-info{
+        font-size:13px;
+        color:var(--muted);
+        margin-top:12px;
+      }
+
+      .slider-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: 10px;
+      }
+
+      .slider-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 140px;
+      }
+
+      .slider-group input[type="range"] {
+        flex: 1;
+        accent-color: var(--accent);
+      }
+
+      .slider-value {
+        font-size: 13px;
+        min-width: 36px;
+        color: var(--muted);
+      }
+
+      input[type="range"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        margin: 0;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        background: var(--accent);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.1s;
+      }
+
+      input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.1);
+      }
+
+      @media (max-width:880px){
+        .form-grid{ grid-template-columns: 1fr; }
+      }
+      @media print { 
+        .controls-card { display: none !important; } 
+        .preview { border: none !important;}
+      }
+    </style>
 </head>
 <body>
-    <div id="wrapper"></div>
+  <div class="container">
+    <section class="controls-card" aria-labelledby="controls-title">
+      <h3 id="controls-title">URL-parametrar</h3>
+
+      <form id="url-params" method="get" aria-label="URL parametrar">
+        <div class="form-grid">
+          <div class="matrix-block" aria-hidden="false">
+            <label class="small"><strong>A</strong></label>
+            <div class="matrix-row">
+              <input id="A-rows" type="number" min="1" placeholder="rader" aria-label="A rader">
+              <div style="color:var(--muted); font-weight:600; padding:0 6px;">×</div>
+              <input id="A-cols" type="number" min="1" placeholder="kolumner" aria-label="A kolumner">
+
+              <!-- per-matrix procent-rutor för A: hide% och cross% -->
+              <div class="slider-container">
+                <label class="slider-group">
+                  <span>hide</span>
+                  <input id="hide-prob-A" type="range" min="0" max="100" value="0">
+                  <span class="slider-value" data-for="hide-prob-A">0%</span>
+                </label>
+                <label class="slider-group">
+                  <span>cross</span>
+                  <input id="cross-prob-A" type="range" min="0" max="100" value="0">
+                  <span class="slider-value" data-for="cross-prob-A">0%</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="matrix-block">
+            <label class="small"><strong>B</strong></label>
+            <div class="matrix-row">
+              <input id="B-rows" type="number" min="1" placeholder="rader" aria-label="B rader">
+              <div style="color:var(--muted); font-weight:600; padding:0 6px;">×</div>
+              <input id="B-cols" type="number" min="1" placeholder="kolumner" aria-label="B kolumner">
+
+              <!-- per-matrix procent-rutor för B: hide% och cross% -->
+              <div class="slider-container">
+                <label class="slider-group">
+                  <span>hide</span>
+                  <input id="hide-prob-B" type="range" min="0" max="100" value="0">
+                  <span class="slider-value" data-for="hide-prob-B">0%</span>
+                </label>
+                <label class="slider-group">
+                  <span>cross</span>
+                  <input id="cross-prob-B" type="range" min="0" max="100" value="0">
+                  <span class="slider-value" data-for="cross-prob-B">0%</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="matrix-block">
+            <label class="small"><strong>C</strong></label>
+            <div class="matrix-row">
+              <input id="C-rows" type="number" min="1" placeholder="rader" aria-label="C rader">
+              <div style="color:var(--muted); font-weight:600; padding:0 6px;">×</div>
+              <input id="C-cols" type="number" min="1" placeholder="kolumner" aria-label="C kolumner">
+
+              <!-- per-matrix procent-rutor för C: hide% och cross% -->
+              <div class="slider-container">
+                <label class="slider-group">
+                  <span>hide</span>
+                  <input id="hide-prob-C" type="range" min="0" max="100" value="0">
+                  <span class="slider-value" data-for="hide-prob-C">0%</span>
+                </label>
+                <label class="slider-group">
+                  <span>cross</span>
+                  <input id="cross-prob-C" type="range" min="0" max="100" value="0">
+                  <span class="slider-value" data-for="cross-prob-C">0%</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- ersätt separata fill/seed-labels med en rad -->
+          <label style="display:flex; gap:8px; grid-column: span 2; align-items:center;">
+            <div style="display:flex; flex-direction:column; gap:6px; flex:1;">
+              <span class="small">fill</span>
+              <select name="fill" id="fill" aria-label="fill">
+                <option value="index">index</option>
+                <option value="random">random</option>
+              </select>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:6px; flex:1;">
+              <span class="small">seed</span>
+              <input name="seed" id="seed" type="text" placeholder="seed eller date" value="" aria-label="seed">
+            </div>
+          </label>
+
+          <!-- antal kopior (flera multiplicationer) -->
+          <label style="grid-column: span 2; display:flex; flex-direction:column; gap:6px;">
+            <span class="small">copies</span>
+            <input name="copies" id="copies" type="number" min="1" value="1" aria-label="copies">
+          </label>
+
+          <!-- dolda inputs som skickas som A och B -->
+          <input type="hidden" name="A" id="A-hidden" />
+          <input type="hidden" name="B" id="B-hidden" />
+
+          <div class="actions">
+            <button class="btn primary" type="submit">Apply</button>
+            <button class="btn ghost" type="button" id="clear-params">Clear</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <main class="preview" id="wrapper" aria-live="polite">
+      <!-- matriser renderas här -->
+    </main>
+  </div>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const params = new URLSearchParams(location.search);
+  const form = $('url-params');
+
+  const SLIDER_IDS = [
+    'hide-prob-A','cross-prob-A',
+    'hide-prob-B','cross-prob-B',
+    'hide-prob-C','cross-prob-C'
+  ];
+
+  const DIM_IDS = ['A-rows','A-cols','B-rows','B-cols','C-rows','C-cols'];
+
+  const E = {
+    Arows: $('A-rows'), Acols: $('A-cols'),
+    Brows: $('B-rows'), Bcols: $('B-cols'),
+    Crows: $('C-rows'), Ccols: $('C-cols'),
+    fill: $('fill'), seed: $('seed'),
+    copies: $('copies'), Ah: $('A-hidden'), Bh: $('B-hidden')
+  };
+
+  function parseMatrixParam(s) {
+    if (!s) return [0,0];
+    const cleaned = String(s).trim().replace(/\s+/g, '');
+    const parts = cleaned.split(/[,x×]/).map(n => parseInt(n,10)).filter(n => !Number.isNaN(n));
+    if (parts.length === 1) return [parts[0], parts[0]];
+    if (parts.length >= 2) return [parts[0] || 0, parts[1] || 0];
+    const n = parseInt(cleaned, 10);
+    return Number.isNaN(n) ? [0,0] : [n,n];
+  }
+
+  // Prefill controls from URL params
+  (function prefill() {
+    if (params.has('A')) {
+      const [r,c] = parseMatrixParam(params.get('A'));
+      if (r) E.Arows.value = r;
+      if (c) E.Acols.value = c;
+    }
+    if (params.has('B')) {
+      const [r,c] = parseMatrixParam(params.get('B'));
+      if (r) E.Brows.value = r;
+      if (c) E.Bcols.value = c;
+    }
+    if (params.has('fill')) E.fill.value = params.get('fill');
+    if (params.has('seed')) E.seed.value = params.get('seed');
+    if (params.has('copies')) E.copies.value = params.get('copies');
+
+    SLIDER_IDS.forEach(id => {
+      const el = $(id);
+      if (!el) return;
+      if (params.has(id)) el.value = params.get(id);
+    });
+  })();
+
+  // Dimension syncing (C.rows = A.rows, C.cols = B.cols)
+  let syncing = false;
+  function setSafe(el, v) {
+    if (!el) return;
+    syncing = true;
+    el.value = String(Math.max(1, Number(v) || 1));
+    syncing = false;
+  }
+  function updateCdim() {
+    if (E.Arows) E.Crows.value = E.Arows.value || '';
+    if (E.Bcols) E.Ccols.value = E.Bcols.value || '';
+  }
+
+  const reconcileMap = {
+    'A-rows': () => setSafe(E.Crows, E.Arows.value),
+    'A-cols': () => setSafe(E.Brows, E.Acols.value),
+    'B-rows': () => setSafe(E.Acols, E.Brows.value),
+    'B-cols': () => setSafe(E.Ccols, E.Bcols.value),
+    'C-rows': () => setSafe(E.Arows, E.Crows.value),
+    'C-cols': () => setSafe(E.Bcols, E.Ccols.value)
+  };
+
+  DIM_IDS.forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    el.addEventListener('input', () => {
+      if (syncing) return;
+      const fn = reconcileMap[id];
+      if (fn) fn();
+      updateCdim();
+    });
+  });
+
+  // Sliders: keep value displays in sync and initialize
+  function initSliders() {
+    SLIDER_IDS.forEach(id => {
+      const slider = $(id);
+      if (!slider) return;
+      const display = document.querySelector(`.slider-value[data-for="${id}"]`);
+      const refresh = () => { if (display) display.textContent = `${slider.value}%`; };
+      slider.addEventListener('input', refresh);
+      refresh();
+    });
+  }
+  initSliders();
+
+  // Build URL from form state and push
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const out = new URLSearchParams();
+
+    ['A','B'].forEach(m => {
+      const r = $(`${m}-rows`)?.value;
+      const c = $(`${m}-cols`)?.value;
+      if (r && c) out.set(m, `${r},${c}`);
+      else if (r) out.set(m, r);
+    });
+
+    if (E.fill?.value) out.set('fill', E.fill.value);
+    if (E.seed?.value) out.set('seed', E.seed.value);
+    if (E.copies?.value) out.set('copies', String(Math.max(1, parseInt(E.copies.value,10) || 1)));
+
+    SLIDER_IDS.forEach(id => {
+      const el = $(id);
+      if (el) out.set(id, String(Number(el.value) || 0));
+    });
+
+    const newUrl = location.pathname + (out.toString() ? ('?' + out.toString()) : '');
+    history.pushState(null, '', newUrl);
+    if (typeof generateGrid === 'function') generateGrid();
+  });
+
+  // Clear button: reset UI, slider displays and URL
+  const clearBtn = $('clear-params');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      form.reset();
+      initSliders(); // refresh displayed slider percentages
+      updateCdim();
+      history.replaceState(null, '', location.pathname);
+      if (typeof generateGrid === 'function') generateGrid();
+    });
+  }
+
+  window.addEventListener('popstate', () => {
+    if (typeof generateGrid === 'function') generateGrid();
+  });
+
+  // Initial sync + render
+  updateCdim();
+  // ensure A-cols -> B-rows sync on load
+  if ($('A-cols')) reconcileMap['A-cols']();
+  if (typeof generateGrid === 'function') generateGrid();
+})();
+</script>
 </body>
 </html>
